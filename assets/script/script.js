@@ -17,6 +17,7 @@ function createPage() {
     
     content.textContent = 'Click the button to start the test'
     timer.textContent = 0;
+    button.innerHTML = 'Start Test'
 }
 
 createPage();
@@ -64,20 +65,4 @@ var questions = [
         D: "concat()"
     }
 
-]
-function printTest() {
-    question = '';
-    question = questions[0].prompt;
-}
-
-printTest()
-
-console.log(questions[0].prompt)
-
-function addQuestions() {
-
-    var nextQuestion = document.createElement("h2")
-    var questionPrompt = document.createTextNode(questions[0].prompt)
-    var answerBank = document.createElement('ol')
-    var singleSelection = document.createElement('')
-}
+];

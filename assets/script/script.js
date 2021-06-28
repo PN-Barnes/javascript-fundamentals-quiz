@@ -1,16 +1,27 @@
-var question = document.querySelector("#quizHolder");
-var submit = document.querySelector("#submitButton");
-var timer = document.querySelector("#timer");
-var container = document.querySelector("#container");
-var answer = document.querySelector("#answer");
+var main = document.querySelector('#main')
 
 // var questions = [question1, question2, question3, question4, question5]
 
-submit.addEventListener("click", function() {
-    for (i=0; i < questions.length; i++) {
 
-    }
-});
+function createPage() {
+    container = document.getElementById('container');
+    content = document.createElement('div');
+    timer = document.createElement('p')
+    prompt = document.createElement('h2');
+    button = document.createElement("BUTTON");
+
+    container.appendChild(timer)
+    container.appendChild(content)
+    content.appendChild(prompt)
+    container.appendChild(button)
+    
+    content.textContent = 'Click the button to start the test'
+    timer.textContent = 0;
+}
+
+createPage();
+
+
 
 var questions = [
     {
@@ -54,19 +65,14 @@ var questions = [
     }
 
 ]
-
-console.log(questions[0].prompt)
-
-submit.addEventListener("click", function() {
-    for (i=0; i < questions.length; i++) {
-
-    }
-});
-
-for (i = 0, i < questions.length, i++) {
-
+function printTest() {
+    question = '';
+    question = questions[0].prompt;
 }
 
+printTest()
+
+console.log(questions[0].prompt)
 
 function addQuestions() {
 

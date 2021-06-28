@@ -1,0 +1,58 @@
+* {
+    font-size: 16px;    
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+header {
+    display: block;
+    text-align: left;
+    margin: 10px;
+    padding: 10px;
+    font-size: 40px;
+    background-color: #993399;
+    text-align: right;
+}
+
+header a {
+    color: whitesmoke;
+}
+
+header a:visited {
+    color: yellow;
+}
+#container {
+    border: violet;
+    border-style: solid;
+    display: block;
+    padding: 10px;
+    margin: 10px;
+}
+
+#timer {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+#quizHolder {
+    text-align: center;
+    font-size: 32px;
+    margin: 10px;
+    padding: 10px;
+}
+
+#submitButton {
+    background-color: #993399;
+    color: whitesmoke;
+    margin: 20px;
+    padding: 10px;   
+}
+
+#answer { 
+    font-size: 24px;
+    text-align: center;
+    color: grey;
+}

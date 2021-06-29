@@ -1,59 +1,50 @@
+var container = document.getElementById('container');
 var main = document.querySelector('#main')
-secondsLeft = 60;
+var content = document.createElement('div');
+var timer = document.createElement('p')
+var prompt = document.createElement('h2');
+var button = document.createElement("BUTTON");
+var testTime = 60;
+var score = 0;
+var answerBank = document.getElementById('answerBank');
 var questions = [
 
     {
-    prompt: "Which are the correct 'if' statements to execute certain code if 'x' is equal to 2?",
-    A: "if(x2)",
-    B: "if(x = 2)",
-    C: "if(x === 2)", // correct answer
-    D: "if(x != 2)"
+        prompt: "Which are the correct 'if' statements to execute certain code if 'x' is equal to 2?",
+        answers: [ "if(x2)", "if(x = 2)", "if(x === 2)", "if(x != 2)"],
+        correct: 2
+        // correct answer [2] //
     }
     ,
     {
         prompt: "Which of the following function of Array object creates a new array with all of the elements of this array for which the provided filtering function returns true?",
-        A: "concat()",
-        B: "every()",
-        C: "filter()", // correct answer
-        D: "some()"
+        answers: ["concat()", "every()", "filter()", "some()"],
+        correct: 2
     }
     ,
     {
         prompt: "Which of the following function of Array object removes the first element from an array and returns that element?",
-        A: "reverse()",
-        B: "shift()", // correct answer
-        C: "slice()",
-        D: "some()"
+        answers: ["reverse()", "shift()", "slice()", "some()"], // correct answer
+        correct: 1
     }
     ,
     {
         prompt: "Which of the following method of Boolean object returns a string depending upon the value of the object?",
-        A: "valueOf()",
-        B: "toSource()",
-        C: "none",
-        D: "toString()" // Correct answer
+        answers: ["valueOf()", "toSource()", "none", "toString()"],
+        correct: 3  // Correct answer
     }
     ,
     {
         prompt: "What is the function of Array object that runs through each element of the array?",
-        A: "every()",
-        B: "forEach()", // Correct answer
-        C: "filter()",
-        D: "concat()"
+        answers: ["every()", "forEach()", "filter()", "concat()"],// Correct answer
+        correct: 1;
     }
 
 ];
-var testTime = 60;
 
 // var questions = [question1, question2, question3, question4, question5]
 
 function createPage() {
-    container = document.getElementById('container');
-    content = document.createElement('div');
-    timer = document.createElement('p')
-    prompt = document.createElement('h2');
-    button = document.createElement("BUTTON");
-    button.classList.add('startButton');
 
     container.appendChild(timer)
     container.appendChild(content)
@@ -61,25 +52,72 @@ function createPage() {
     container.appendChild(button)
     
     content.textContent = 'Click the button to start the test'
-    timer.textContent = 0;
+    timer.textContent = '';
     button.innerHTML = 'Start Test'
 }
 createPage();
 
 function setTimer() {
+//----------------------------------------------- SET TIMER AND TRACK
     var timerInterval = setInterval(function() {
-        testTime--
-        timer.textContent = testTime;
-        
-
-        if( testTime === 0) {
+        timer.textContent = testTime
+        if( testTime === 0 ) {
             clearInterval(timerInterval)
-
-            gameOver();
+            content.textContent = 'GAME OVER'
         }
+        testTime--;
+        
+    }, 100);
 
-    }, 1000);
 }
 
-setTimer();
 
+function startTest() {
+    setTimer();
+
+    questionPrompt = document.getElementById('questionPrompt');
+    button1 = document.getElementById('button1');
+    button2 = document.getElementById('button2');
+    button3 = document.getElementById('button3');
+    button4 = document.getElementById('button4');
+    
+    // when start button is clicked... 
+    // for every question within our object,
+        // my container for the test will unhide 
+        // A question will display in a h2 question [i] = question1 
+        // the text content of the h2 will change to match question1
+        // four answer choice buttons will display 
+        // each answer choice will match answers array indexes
+        // when I select an answer... 
+        // my answer will be compared to the correct answer
+        // IF my answer is correct, points will be added to my score
+        // IF my answer is incorrect, no points will be added and time will be subtracted.
+        // My for loop will start over and the i will move to the next question
+
+    for (let i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        questionPrompt.textContent = question.prompt;
+        button1.textContent = question.answers[0]
+        button2.textContent = question.answers[1]
+        button3.textContent = question.answers[2]
+        button4.textContent = question.answers[3]
+
+        answerBank.addEventListener('click',function(event) {
+            userChoice = event.target
+            if( userChoice.textContent === question.answers[correct]) {
+                score += 10;
+            } else {
+                testTime -= 10;
+            }
+        });
+        return score;
+    }
+    questionPrompt.textContent = questions[i].prompt;
+    container.appendChild(questionPrompt);
+
+}
+
+button.addEventListener('click', function() {
+    setTimer()
+   // startTest()
+})

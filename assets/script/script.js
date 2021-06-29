@@ -1,30 +1,7 @@
 var main = document.querySelector('#main')
-
-// var questions = [question1, question2, question3, question4, question5]
-
-
-function createPage() {
-    container = document.getElementById('container');
-    content = document.createElement('div');
-    timer = document.createElement('p')
-    prompt = document.createElement('h2');
-    button = document.createElement("BUTTON");
-
-    container.appendChild(timer)
-    container.appendChild(content)
-    content.appendChild(prompt)
-    container.appendChild(button)
-    
-    content.textContent = 'Click the button to start the test'
-    timer.textContent = 0;
-    button.innerHTML = 'Start Test'
-}
-
-createPage();
-
-
-
+secondsLeft = 60;
 var questions = [
+
     {
     prompt: "Which are the correct 'if' statements to execute certain code if 'x' is equal to 2?",
     A: "if(x2)",
@@ -66,3 +43,43 @@ var questions = [
     }
 
 ];
+var testTime = 60;
+
+// var questions = [question1, question2, question3, question4, question5]
+
+function createPage() {
+    container = document.getElementById('container');
+    content = document.createElement('div');
+    timer = document.createElement('p')
+    prompt = document.createElement('h2');
+    button = document.createElement("BUTTON");
+    button.classList.add('startButton');
+
+    container.appendChild(timer)
+    container.appendChild(content)
+    content.appendChild(prompt)
+    container.appendChild(button)
+    
+    content.textContent = 'Click the button to start the test'
+    timer.textContent = 0;
+    button.innerHTML = 'Start Test'
+}
+createPage();
+
+function setTimer() {
+    var timerInterval = setInterval(function() {
+        testTime--
+        timer.textContent = testTime;
+        
+
+        if( testTime === 0) {
+            clearInterval(timerInterval)
+
+            gameOver();
+        }
+
+    }, 1000);
+}
+
+setTimer();
+

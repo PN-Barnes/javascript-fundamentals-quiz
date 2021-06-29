@@ -1,12 +1,14 @@
-var container = document.getElementById('container');
-var main = document.querySelector('#main')
-var content = document.createElement('div');
-var timer = document.createElement('p')
-var prompt = document.createElement('h2');
-var button = document.createElement("BUTTON");
+// ------------------------- POINTER VARIABLES ---------------------------------
+var startPage = document.getElementById('startPage');
+var timer = document.getElementById('timer');
+var startButton = document.getElementById('startButton');
+var questionPrompt = document.getElementById('questionPrompt');
 var testTime = 60;
 var score = 0;
 var answerBank = document.getElementById('answerBank');
+// -----------------------------------------------------------------------------
+
+// -------------------- Quiz questions and answers ------------------------------
 var questions = [
 
     {
@@ -37,45 +39,31 @@ var questions = [
     {
         prompt: "What is the function of Array object that runs through each element of the array?",
         answers: ["every()", "forEach()", "filter()", "concat()"],// Correct answer
-        correct: 1;
+        correct: 1
     }
 
-];
+]; // END OF ARRAY
+// ---------------------------------------------------------------------------------
 
-// var questions = [question1, question2, question3, question4, question5]
-
-function createPage() {
-
-    container.appendChild(timer)
-    container.appendChild(content)
-    content.appendChild(prompt)
-    container.appendChild(button)
-    
-    content.textContent = 'Click the button to start the test'
-    timer.textContent = '';
-    button.innerHTML = 'Start Test'
-}
-createPage();
-
+//-------------------------- SET TIMER AND TRACK -----------------------------------
 function setTimer() {
-//----------------------------------------------- SET TIMER AND TRACK
     var timerInterval = setInterval(function() {
         timer.textContent = testTime
-        if( testTime === 0 ) {
+        if( testTime <= 0 ) {
             clearInterval(timerInterval)
             content.textContent = 'GAME OVER'
         }
         testTime--;
         
-    }, 100);
+    }, 1000);
 
 }
+// -----------------------------------------------------------------------------------
 
-
+// -------------------------------- RUN THE TEST -------------------------------------
 function startTest() {
     setTimer();
 
-    questionPrompt = document.getElementById('questionPrompt');
     button1 = document.getElementById('button1');
     button2 = document.getElementById('button2');
     button3 = document.getElementById('button3');
@@ -93,8 +81,17 @@ function startTest() {
         // IF my answer is correct, points will be added to my score
         // IF my answer is incorrect, no points will be added and time will be subtracted.
         // My for loop will start over and the i will move to the next question
+        // After I answer all the questions...
+        // my scored is printed to the console
+        // my end game page will load
+        // a tag with my score will appear
+        // an input field asking for my initials will load
+        // a submit button will load onto the page
+        // when i enter my initials and click submit..
+        // my score and initials will be saved to the highscore page and will save to the local storage.
 
-    for (let i = 0; i < questions.length; i++) {
+    for (let i = 0; i < questions.length; i++ ) {
+        
         var question = questions[i];
         questionPrompt.textContent = question.prompt;
         button1.textContent = question.answers[0]
@@ -104,20 +101,19 @@ function startTest() {
 
         answerBank.addEventListener('click',function(event) {
             userChoice = event.target
-            if( userChoice.textContent === question.answers[correct]) {
+            if( userChoice.textContent === question.answers[question.correct]) {
                 score += 10;
+                console.log(score)
             } else {
                 testTime -= 10;
+                console.log(score)
             }
         });
-        return score;
     }
-    questionPrompt.textContent = questions[i].prompt;
-    container.appendChild(questionPrompt);
-
+    
 }
-
-button.addEventListener('click', function() {
-    setTimer()
-   // startTest()
+// ------------------------------------------------------------------------------------
+startButton.addEventListener('click', function() {
+    startTest()
+    startPage.style.display = 'none';
 })

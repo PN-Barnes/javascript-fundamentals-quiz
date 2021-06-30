@@ -16,6 +16,7 @@ var highscoreDisplay = document.getElementById('scoreboard')
 var scoreItems = document.getElementById('scoreitems')
 var returnHome = document.getElementById('homeReturn')
 var createLi = document.createElement("li")
+var scoreBank = [];
 // -----------------------------------------------------------------------------
 
 // -------------------- Quiz questions and answers ------------------------------
@@ -58,6 +59,7 @@ var questions = [
     }
     
 ]; // END OF ARRAY
+
 // ---------------------------------------------------------------------------------
 
 //-------------------------- SET TIMER AND TRACK -----------------------------------
@@ -94,26 +96,9 @@ function startTest() {
     button3.textContent = questions[questionNum].answers[2]
     button4.textContent = questions[questionNum].answers[3]
     
-    // when start button is clicked... 
-    // for every question within our object,
-    // my container for the test will unhide 
-    // the text content of the h2 will change to match question1
-    // four answer choice buttons will display 
-    // each answer choice will match answers array indexes
-    // when I select an answer... 
-    // my answer will be compared to the correct answer
-    // IF my answer is correct, points will be added to my score
-    // IF my answer is incorrect, no points will be added and time will be subtracted.
-    // My for loop will start over and the i will move to the next question
-    // After I answer all the questions...
-    // my scored is printed to the console
-    // my end game page will load
-    // a tag with my score will appear
-    // an input field asking for my initials will load
-    // a submit button will load onto the page
-    // when i enter my initials and click submit..
-    // my score and initials will be saved to the highscore page and will save to the local storage.
     } // END OF FUNCTION
+
+// ------------------------ EVENT LISTENERS -------------------------------------------
     answerBank.addEventListener('click',function(event) {
         userChoice = event.target
         
@@ -145,20 +130,24 @@ function startTest() {
         highscoreDisplay.style.display = 'none';
 
     })
-    // ------------------------------------------------------------------------------------
+
 startButton.addEventListener('click', function() {
     setTimer();
     quizContainer.style.display = 'block'
     startTest()
     startPage.style.display = 'none';
 })
-// --------------------------------------Endgame function-------------------------------
-
 submitScore.addEventListener('click', function(event) {
     event.preventDefault()
+    scoreBank.push(score)
     localStorage.setItem("score", score)
     endGame()
 })
+
+// -------------------------------END EVENT lISTENERS ----------------------------------
+
+// --------------------------------------Endgame function-------------------------------
+
 function endGame() {
     quizContainer.style.display="none";
     startPage.style.display = "none";
@@ -172,9 +161,4 @@ function endGame() {
 
 }
 
-function printHighPage() {
-    localStorage.forEach(function(){
-        createLi.innerHTML = localStorage
-        scoreItems.appendChild(createLi)
-    })
-}
+var highscores = JSON.parse(localStorage.getItem("highscores"))

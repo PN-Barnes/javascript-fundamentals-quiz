@@ -15,6 +15,7 @@ var highscoreLink = document.getElementById('highLink')
 var highscoreDisplay = document.getElementById('scoreboard')
 var scoreItems = document.getElementById('scoreitems')
 var returnHome = document.getElementById('homeReturn')
+var createLi = document.createElement("li")
 // -----------------------------------------------------------------------------
 
 // -------------------- Quiz questions and answers ------------------------------
@@ -153,18 +154,27 @@ startButton.addEventListener('click', function() {
 })
 // --------------------------------------Endgame function-------------------------------
 
+submitScore.addEventListener('click', function(event) {
+    event.preventDefault()
+    localStorage.setItem("score", score)
+    endGame()
+})
 function endGame() {
     quizContainer.style.display="none";
     startPage.style.display = "none";
     gameOverScreen.style.display='block';
 
     for(i=0; i < localStorage.length; i++){
-        submitScore.addEventListener('click', function(event) {
-            event.preventDefault()
-            localStorage.setItem("score", score)
-            scoreItems.innerHTML =  userInitial.value + ": " + localStorage.getItem("score")
-        })
+        createLi.innerHTML = userInitial.value + ": " + localStorage.key(i).value
+        scoreItems.innerHTML = createLi;
 
     }
 
+}
+
+function printHighPage() {
+    localStorage.forEach(function(){
+        createLi.innerHTML = localStorage
+        scoreItems.appendChild(createLi)
+    })
 }

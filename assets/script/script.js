@@ -11,11 +11,17 @@ var answerBank = document.getElementById('answerBank');
 var submitScore = document.getElementById('scoreSubmit')
 var userInitial = document.getElementById('playerInitials')
 var localStorage = window.localStorage;
+var highscoreLink = document.getElementById('highLink')
+var highscoreDisplay = document.getElementById('scoreboard')
+var scoreItems = document.getElementById('scoreitems')
+var returnHome = document.getElementById('homeReturn')
 // -----------------------------------------------------------------------------
 
 // -------------------- Quiz questions and answers ------------------------------
 quizContainer.style.display = 'none'
 gameOverScreen.style.display ='none'
+highscoreDisplay.style.display = 'none'
+
 var questionNum = 0;
 var questions = [
     
@@ -117,13 +123,27 @@ function startTest() {
             testTime -= 10;
             console.log(score)
         }
-        // if(questionNum === questions.length){
-        //     endGame()
-        // }
         questionNum++
         startTest();
         console.log(questionNum);
     });
+
+    highscoreLink.addEventListener('click', function() {
+        startPage.style.display = 'none';
+        quizContainer.style.display = 'none'
+        gameOverScreen.style.display = 'none'
+        highscoreDisplay.style.display = 'block';
+
+
+    })
+
+    returnHome.addEventListener('click', function() {
+        startPage.style.display = 'block'
+        quizContainer.style.display = 'none'
+        gameOverScreen.style.display = 'none'
+        highscoreDisplay.style.display = 'none';
+
+    })
     // ------------------------------------------------------------------------------------
 startButton.addEventListener('click', function() {
     setTimer();
@@ -138,15 +158,13 @@ function endGame() {
     startPage.style.display = "none";
     gameOverScreen.style.display='block';
 
-    
-    submitScore.addEventListener('click', function() {
-        console.log(userInitial.value);
-        localStorage.setItem('Initials:', userInitial.value)
-        localStorage.setItem('Score: ', score)
-        startPage.style.display = 'block';
-        console.log(window.localStorage)
-    })
+    for(i=0; i < localStorage.length; i++){
+        submitScore.addEventListener('click', function(event) {
+            event.preventDefault()
+            localStorage.setItem("score", score)
+            scoreItems.innerHTML =  userInitial.value + ": " + localStorage.getItem("score")
+        })
+
+    }
 
 }
-
-

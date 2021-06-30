@@ -2,14 +2,20 @@
 var startPage = document.getElementById('startPage');
 var timer = document.getElementById('timer');
 var startButton = document.getElementById('startButton');
-
+var quizContainer = document.getElementById('quiz')
+var gameOverScreen = document.getElementById('gameOver')
 var questionPrompt = document.getElementById('questionPrompt');
 var testTime = 60;
 var score = 0;
 var answerBank = document.getElementById('answerBank');
+var submitScore = document.getElementById('scoreSubmit')
+var userInitial = document.getElementById('playerInitials')
+var localStorage = window.localStorage;
 // -----------------------------------------------------------------------------
 
 // -------------------- Quiz questions and answers ------------------------------
+quizContainer.style.display = 'none'
+gameOverScreen.style.display ='none'
 var questionNum = 0;
 var questions = [
     
@@ -51,9 +57,10 @@ var questions = [
 function setTimer() {
     var timerInterval = setInterval(function() {
         timer.textContent = testTime
-        if( testTime <= 0 || questionNum === questions.length) {
+        if( testTime <= 0 || questionNum === questions.length ) {
             clearInterval(timerInterval)
             timer.textContent = 'GAME OVER'
+            endGame()
         }
         testTime--;
         
@@ -99,15 +106,6 @@ function startTest() {
     // a submit button will load onto the page
     // when i enter my initials and click submit..
     // my score and initials will be saved to the highscore page and will save to the local storage.
-    
-    
-    
-    // for (let i = 0; i < questions.length; i++ ) {
-        
-        
-        //         console.log(question)
-        // } 
-        
     } // END OF FUNCTION
     answerBank.addEventListener('click',function(event) {
         userChoice = event.target
@@ -119,13 +117,36 @@ function startTest() {
             testTime -= 10;
             console.log(score)
         }
+        // if(questionNum === questions.length){
+        //     endGame()
+        // }
         questionNum++
-        console.log(questionNum);
         startTest();
+        console.log(questionNum);
     });
     // ------------------------------------------------------------------------------------
 startButton.addEventListener('click', function() {
-    startTest()
     setTimer();
+    quizContainer.style.display = 'block'
+    startTest()
     startPage.style.display = 'none';
 })
+// --------------------------------------Endgame function-------------------------------
+
+function endGame() {
+    quizContainer.style.display="none";
+    startPage.style.display = "none";
+    gameOverScreen.style.display='block';
+
+    
+    submitScore.addEventListener('click', function() {
+        console.log(userInitial.value);
+        localStorage.setItem('Initials:', userInitial.value)
+        localStorage.setItem('Score: ', score)
+        startPage.style.display = 'block';
+        console.log(window.localStorage)
+    })
+
+}
+
+
